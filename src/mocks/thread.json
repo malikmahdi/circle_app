@@ -1,0 +1,86 @@
+[
+  {
+    "id": 1,
+    "author_fullname": "Dian Doe",
+    "author_picture": "../assets/image/avatar.jpg",
+    "author_username": "@diandoe123",
+    "time_post": 4,
+    "content": "Kalian pernah ga sih bet on saving? Jadi by calculation sebenernya kita ga survive sampe tanggal tertentu. Tapi entah gimana bisa aja gitu. Ada aja jalannya augmented reality real time puppet I made. You can try it now went below in the thread.",
+    "image": "https://img.freepik.com/free-photo/beautiful-scenery-river-surrounded-by-greenery-forest_181624-40482.jpg?w=826&t=st=1711405870~exp=1711406470~hmac=672552a110cc9cfdbd52966d7d48fb4a4be97c6c920c4cfb0c86ff05246fd2bd",
+    "likes_count": 1000,
+    "replies_count": 300,
+    "isLike": false
+  },
+  {
+    "id": 2,
+    "author_fullname": "Danu Doe",
+    "author_picture": "https://bit.ly/kent-c-dodds",
+    "author_username": "@danudoe123",
+    "time_post": 5,
+    "content": "Pernah nggak dapet dream job terus lama-lama ngerasa lah kok tidak seperti yang diharapkan (atau simply lelah) terus fall out of love dengan job/bidang tsb?",
+    "image": "https://bit.ly/dan-abramov",
+    "likes_count": 1000,
+    "replies_count": 300,
+    "isLike": false
+  },
+  {
+    "id": 3,
+    "author_fullname": "Lingga Doe",
+    "author_picture": "https://bit.ly/prosper-baba",
+    "author_username": "@linggaoe123",
+    "time_post": 3,
+    "content": "Ingin melakukan apa hari ini?",
+    "image": "https://img.freepik.com/free-photo/closeup-shot-lake-muskoka-ontario-canada_181624-40507.jpg?w=900&t=st=1711405906~exp=1711406506~hmac=f1bbdb5ab9e8d755f4807a66a58fd40e4c2053fa1f8cce6c47f4d85a289f7596",
+    "likes_count": 1000,
+    "replies_count": 500,
+    "isLike": false
+  },
+  {
+    "id": 4,
+    "author_fullname": "Fahri Doe",
+    "author_picture": "https://bit.ly/sage-adebayo",
+    "author_username": "@fahridoe123",
+    "time_post": 3,
+    "content": "Ingin melakukan apa hari ini?",
+    "image": "https://img.freepik.com/free-photo/beautiful-landscape_8327-116.jpg?w=826&t=st=1711405931~exp=1711406531~hmac=32036cd327acb9b9d4d9bdd2d8347f3cce15f3f31394892560af1daf38f3350e",
+    "likes_count": 1000,
+    "replies_count": 700,
+    "isLike": false
+  },
+  {
+    "id": 5,
+    "author_fullname": "Lingga Doe",
+    "author_picture": "https://bit.ly/prosper-baba",
+    "author_username": "@linggaoe123",
+    "time_post": 3,
+    "content": "Ingin melakukan apa hari ini?",
+    "image": "https://img.freepik.com/free-photo/beautiful-landscape_8327-116.jpg?w=826&t=st=1711405931~exp=1711406531~hmac=32036cd327acb9b9d4d9bdd2d8347f3cce15f3f31394892560af1daf38f3350e",
+    "likes_count": 1000,
+    "replies_count": 500,
+    "isLike": false
+  },
+  {
+    "id": 6,
+    "author_fullname": "Danu Doe",
+    "author_picture": "https://bit.ly/kent-c-dodds",
+    "author_username": "@danudoe123",
+    "time_post": 5,
+    "content": "Pernah nggak dapet dream job terus lama-lama ngerasa lah kok tidak seperti yang diharapkan (atau simply lelah) terus fall out of love dengan job/bidang tsb?",
+    "image": "https://bit.ly/dan-abramov",
+    "likes_count": 1000,
+    "replies_count": 300,
+    "isLike": false
+  },
+  {
+    "id": 7,
+    "author_fullname": "Fahri Doe",
+    "author_picture": "https://bit.ly/sage-adebayo",
+    "author_username": "@fahridoe123",
+    "time_post": 3,
+    "content": "Ingin melakukan apa hari ini?",
+    "image": "https://img.freepik.com/free-photo/beautiful-landscape_8327-116.jpg?w=826&t=st=1711405931~exp=1711406531~hmac=32036cd327acb9b9d4d9bdd2d8347f3cce15f3f31394892560af1daf38f3350e",
+    "likes_count": 1000,
+    "replies_count": 700,
+    "isLike": false
+  }
+]

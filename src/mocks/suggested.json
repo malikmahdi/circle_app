@@ -1,0 +1,44 @@
+[
+  {
+    "id": 1,
+    "author_fullname": "Dian Doe",
+    "author_picture": "../assets/image/avatar.jpg",
+    "author_username": "@diandoe123"
+  },
+  {
+    "id": 2,
+    "author_fullname": "Danu Doe",
+    "author_picture": "https://bit.ly/kent-c-dodds",
+    "author_username": "@danudoe123"
+  },
+  {
+    "id": 3,
+    "author_fullname": "Lingga Doe",
+    "author_picture": "https://bit.ly/prosper-baba",
+    "author_username": "@linggaoe123"
+  },
+  {
+    "id": 4,
+    "author_fullname": "Fahri Doe",
+    "author_picture": "https://bit.ly/sage-adebayo",
+    "author_username": "@fahridoe123"
+  },
+  {
+    "id": 5,
+    "author_fullname": "Lingga Doe",
+    "author_picture": "https://bit.ly/prosper-baba",
+    "author_username": "@linggaoe123"
+  },
+  {
+    "id": 6,
+    "author_fullname": "Danu Doe",
+    "author_picture": "https://bit.ly/kent-c-dodds",
+    "author_username": "@danudoe123"
+  },
+  {
+    "id": 7,
+    "author_fullname": "Fahri Doe",
+    "author_picture": "https://bit.ly/sage-adebayo",
+    "author_username": "@fahridoe123"
+  }
+]
