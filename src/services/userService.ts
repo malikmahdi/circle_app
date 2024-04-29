@@ -5,18 +5,44 @@ import * as bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
 import { STATUS_CODE } from "../utills/constant";
 
-export const getUsers = async () => {
+export const getUsers = async (
+  condition: { username: string },
+  loggedInId: number
+) => {
   return await db.user.findMany({
-    include: {
+    where: {
+      username: {
+        contains: condition.username,
+      },
+      NOT: {
+        id: loggedInId,
+      },
+    },
+    select: {
+      id: true,
+      username: true,
+      fullname: true,
+      _count: true,
       profile: {
         select: {
           avatar: true,
+          bio: true,
+          cover: true,
         },
       },
     },
   });
+  //     }
+  //     include: {
+  //       profile: {
+  //         select: {
+  //           avatar: true,
+  //         },
+  //       },
+  //     },
+  //   });
+  // };
 };
-
 export const getUser = async (id: number) => {
   return await db.user.findFirst({
     where: {

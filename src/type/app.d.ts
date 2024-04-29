@@ -19,6 +19,8 @@ export interface IProfile {
   avatar?: string;
   cover?: string;
   userId?: number;
+  // fullname?: string;
+  // username?: string;
 }
 
 export interface IThread {
@@ -26,4 +28,12 @@ export interface IThread {
   content?: string;
   userId: number;
   threadId: number;
+}
+
+export interface IEditProfile {
+  bio?: string;
+  avatar?: string;
+  cover?: string;
+  fullname?: string;
+  username?: string;
 }

@@ -1,6 +1,7 @@
 import { Router } from "express";
 import authentication from "../middleware/authentication";
 import uploadMiddleware from "../middleware/upload";
+import cloudinary from "../libs/cloudinary";
 import {
   updateProfile,
   getProfile,
@@ -9,14 +10,16 @@ import {
 
 const profileRouter = Router();
 
+cloudinary.config();
+
 profileRouter.patch(
   "/profile",
   authentication,
-  uploadMiddleware("cover"),
+  uploadMiddleware(),
   updateProfile
 );
 
-profileRouter.get("/profile", authentication, getProfile);
+profileRouter.get("/profile", authentication, uploadMiddleware(), getProfile);
 profileRouter.get("/profile/:id", getProfileById);
 
 export default profileRouter;

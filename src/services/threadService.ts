@@ -62,6 +62,12 @@ export const getThread = async (id: number) => {
           },
         },
       },
+      _count: {
+        select: {
+          replies: true,
+          like: true,
+        },
+      },
     },
   });
 };
@@ -69,7 +75,7 @@ export const getThread = async (id: number) => {
 export const getThreadProfile = async (userId: number) => {
   return await db.thread.findMany({
     where: {
-      userId: userId,
+      userId,
       threadId: null,
     },
 
@@ -97,6 +103,39 @@ export const getThreadProfile = async (userId: number) => {
     },
   });
 };
+
+export const getThreadByUserId = async (userId: number) => {
+  return await db.thread.findMany({
+    where: {
+      userId,
+      threadId: null,
+    },
+
+    include: {
+      image: {
+        select: {
+          image: true,
+        },
+      },
+      author: {
+        select: {
+          id: true,
+          username: true,
+          fullname: true,
+          profile: {
+            select: {
+              avatar: true,
+            },
+          },
+        },
+      },
+    },
+    orderBy: {
+      id: "desc",
+    },
+  });
+};
+
 export const createThread = async (
   payload: IThread,
   files: { [fieldName: string]: Express.Multer.File[] }
@@ -180,6 +219,14 @@ export const getReplies = async (threadId: number) => {
     },
     orderBy: {
       id: "desc",
+    },
+  });
+};
+
+export const getThreadImages = async (threadId: number) => {
+  return await db.threadImage.findMany({
+    where: {
+      threadId,
     },
   });
 };

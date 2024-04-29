@@ -45,7 +45,14 @@ export const login = async (req: Request, res: Response) => {
 
 export const getUsers = async (req: Request, res: Response) => {
   try {
-    const users = await userService.getUsers();
+    const condition = req.query;
+    const userId = res.locals.user;
+
+    const users = await userService.getUsers(
+      condition as { username: string },
+      userId
+    );
+
     res.json({
       status: true,
       message: "success",

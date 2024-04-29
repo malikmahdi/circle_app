@@ -33,7 +33,7 @@ const upload = multer({
   },
 ]);
 
-const uploadMiddleware = (fieldname: string) => {
+const uploadMiddleware = () => {
   return (req: Request, res: Response, next: NextFunction) => {
     upload(req, res, (err) => {
       console.log(err);

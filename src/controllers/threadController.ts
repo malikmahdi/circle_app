@@ -45,6 +45,23 @@ export const getThreadProfile = async (req: Request, res: Response) => {
   }
 };
 
+export const getThreadByUserId = async (req: Request, res: Response) => {
+  try {
+    const { id } = req.params;
+    const thread = await threadService.getThreadByUserId(+id);
+    res.json({
+      status: true,
+      message: "Success",
+      data: thread,
+    });
+  } catch (error) {
+    const err = error as unknown as Error;
+    console.log(err);
+
+    res.json({ status: false, message: err.message });
+  }
+};
+
 export const createThread = async (req: Request, res: Response) => {
   try {
     const { body } = req;
@@ -73,6 +90,26 @@ export const getReplies = async (req: Request, res: Response) => {
       status: true,
       message: "Success",
       data: replies,
+    });
+  } catch (error) {
+    const err = error as unknown as Error;
+    console.log(err);
+    res.status(500).json({
+      status: false,
+      message: err.message,
+    });
+  }
+};
+
+export const getThreadImages = async (req: Request, res: Response) => {
+  try {
+    const { threadId } = req.params;
+    const images = await threadService.getThreadImages(+threadId);
+
+    res.json({
+      status: true,
+      message: "Success",
+      data: images,
     });
   } catch (error) {
     const err = error as unknown as Error;

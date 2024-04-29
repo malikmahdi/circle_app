@@ -11,7 +11,7 @@ const userRouter = Router();
 
 userRouter.post("/register", register);
 userRouter.post("/login", login);
-userRouter.get("/users", getUsers);
+userRouter.get("/users", authentication, getUsers);
 userRouter.get("/user/:id", getUser);
 
 export default userRouter;
