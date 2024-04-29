@@ -1,39 +1,53 @@
 import { Box, SimpleGrid, Image } from "@chakra-ui/react";
 import React, { useEffect, useState } from "react";
-import { getThreadImages, getThreadProfile } from "../libs/call/thread";
+import {
+  getThreadById,
+  getThreadImages,
+  getThreadProfile,
+} from "../libs/call/thread";
 import { IThread, ThreadImage } from "../types/app";
 import ThreadCard from "../features/ThreadCard";
+import { useParams } from "react-router-dom";
 
 interface IProfileMedia {
-  media: ThreadImage;
+  media: IThread;
 }
 
-const ProfileAllMedia: React.FC = () => {
+const ProfileAllMediaUser: React.FC = () => {
   const [threadProfile, setThreadProfile] = useState<IThread[]>([]);
   const _host_url = "http://localhost:5123/uploads/";
 
-  const handleThreadProfile = async () => {
+  const id = useParams();
+
+  const handleThreadProfile = async (id: number) => {
     try {
-      const { data } = await getThreadProfile();
-      setThreadProfile(data.data);
+      const { data } = await getThreadById(Number(id));
+      //   setThreadProfile(data.data);
+      console.log("data detail img", data);
     } catch (error) {
       console.log(error);
     }
   };
+  console.log("id detail", id);
 
   useEffect(() => {
-    handleThreadProfile();
+    handleThreadProfile(Number(id));
   }, []);
 
   return (
     <Box width={"100%"} bg={"#1D1D1D"}>
       {threadProfile.map((thread) => (
         <Box key={thread.id}>
-          <SimpleGrid columns={2} spacingX="20px" spacingY="20px">
-            {thread.image &&
-              thread.image.map((item, index) => (
-                <Box key={index}>
-                  <Box bg="tomato" mt={"8px"}>
+          {thread.image &&
+            thread.image.map((item, index) => (
+              <SimpleGrid
+                key={index}
+                columns={2}
+                spacingX="10px"
+                spacingY="20px"
+              >
+                <Box>
+                  <Box bg="tomato">
                     <Image
                       src={_host_url + item.image}
                       alt="Dan Abramov"
@@ -45,12 +59,12 @@ const ProfileAllMedia: React.FC = () => {
                     />
                   </Box>
                 </Box>
-              ))}
-          </SimpleGrid>
+              </SimpleGrid>
+            ))}
         </Box>
       ))}
     </Box>
   );
 };
 
-export default ProfileAllMedia;
+export default ProfileAllMediaUser;

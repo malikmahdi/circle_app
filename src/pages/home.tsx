@@ -16,6 +16,9 @@ import { IThread } from "../types/app";
 import { getThreads } from "../libs/call/thread";
 import { useAppDispatch, useAppSelector } from "../store/rootReducer";
 import { getThreadAsync } from "../store/async/thread";
+import { getFollower } from "../libs/call/follow";
+
+// const callback = () => {};
 
 const Home = () => {
   const { thread } = useAppSelector((state) => state);
@@ -43,52 +46,3 @@ const Home = () => {
 };
 
 export default Home;
-
-{
-  /* {!isLoading ? (
-  getThreads?.map((item: any) => (
-    <ThreadCard
-      key={item.id}
-      // id={item.id}
-      author_picture={item.author_picture}
-      author_fullname={item.author_fullname}
-      author_username={item.author_username}
-      time_post={item.time_post}
-      content={item.content}
-      image={item.image}
-      likes_count={item.likes_count}
-      replies_count={item.replies_count}
-      posted_at={item.posted_at}
-      isLike={item.isLike}
-    />
-  ))
-) : (
-  <Box>
-    <Spinner
-      thickness="4px"
-      speed="0.65s"
-      emptyColor="gray.200"
-      color="gray.500"
-      size="xl"
-    />
-  </Box>
-)}
-
-{isError && (
-  <Alert
-    status="error"
-    variant="subtle"
-    flexDirection="column"
-    alignItems="center"
-    justifyContent="center"
-    textAlign="center"
-    height="200px"
-    bg="#1D1D1D"
-  >
-    <AlertIcon boxSize="40px" mr={0} />
-    <AlertTitle mt={4} mb={1} fontSize="lg">
-      Error while getting threads
-    </AlertTitle>
-  </Alert>
-)} */
-}

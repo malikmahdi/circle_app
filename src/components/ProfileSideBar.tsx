@@ -23,6 +23,7 @@ import {
   FormLabel,
   Input,
   useDisclosure,
+  InputGroup,
 } from "@chakra-ui/react";
 import avatarr from "../assets/image/avatar2.jpg";
 import { useSelector } from "react-redux";
@@ -33,6 +34,7 @@ import { Link } from "react-router-dom";
 import ModalEditProfile from "./ModalEditProfile";
 import { useAppDispatch, useAppSelector } from "../store/rootReducer";
 import { LuImagePlus } from "react-icons/lu";
+import { getFollower } from "../libs/call/follow";
 
 const ProfileSidebar = () => {
   const profile = useAppSelector((state) => state.auth.user);
@@ -45,15 +47,7 @@ const ProfileSidebar = () => {
     setSize(newSize);
     onOpen();
   };
-
   const sizes = ["xl"];
-
-  const inputRef = useRef<HTMLInputElement>(null);
-  const handleImage = () => {
-    if (inputRef.current) {
-      inputRef.current.click();
-    }
-  };
 
   return (
     <>
@@ -114,19 +108,19 @@ const ProfileSidebar = () => {
             <HStack gap="1">
               <Box display="flex" gap="1">
                 <Text fontSize="md" color="white">
-                  300
+                  {profile?.user?._count.following}
                 </Text>
                 <Text fontSize="md" color="gray">
-                  Following
+                  Follower
                 </Text>
               </Box>
 
               <Box display="flex" gap="1">
                 <Text fontSize="md" color="white">
-                  300
+                  {profile?.user?._count.follower}
                 </Text>
                 <Text fontSize="md" color="gray">
-                  Followers
+                  Following
                 </Text>
               </Box>
             </HStack>
@@ -146,13 +140,18 @@ const ProfileSidebar = () => {
             borderRadius="2xl"
           />
           <ModalBody bg="#1D1D1D" borderRadius="xl">
-            {/* <ModalEditProfile /> */}
-            <Box>
-              <Text color="white" as="b" fontSize="xl">
-                Edit Profile
-              </Text>
-              {/* <Box px="5" paddingTop="5"></Box> */}
-              {/* <Box position="relative" paddingTop={"5"}>
+            <ModalEditProfile />
+          </ModalBody>
+        </ModalContent>
+      </Modal>
+    </>
+  );
+};
+
+export default ProfileSidebar;
+
+{
+  /* <Box position="relative" paddingTop={"5"}>
                 <Image
                   src="https://images.unsplash.com/photo-1555041469-a586c61ea9bc?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1770&q=80"
                   alt="Green double couch with wooden legs"
@@ -198,108 +197,5 @@ const ProfileSidebar = () => {
                     </WrapItem>
                   </Wrap>
                 </Button>
-                {/* <Text color={"white"}>{formThread.image?.length}</Text> */}
-              {/* </Box> */}
-
-              <Box position="relative">
-                <Image
-                  src={_host_url + profile?.cover}
-                  alt="cover image"
-                  borderRadius="lg"
-                  height={"150px"}
-                  // width={"1000px"}
-                  objectFit="cover"
-                />
-              </Box>
-
-              <Box display="flex" marginTop="3" justifyContent="space-between">
-                <Wrap position="absolute" marginTop="" top="170" left="30">
-                  <WrapItem>
-                    <Button
-                      fontSize="3xl"
-                      onClick={handleImage}
-                      background={"#1d1d1d"}
-                      _hover={{ backgroundColor: "gray", color: "white" }}
-                    >
-                      <Input
-                        ref={inputRef}
-                        // display="none"
-                        hidden
-                        type="file"
-                        name="image"
-                        multiple
-                        max={4}
-                        // onChange={(e) =>
-                        //   setFormThread({ ...formThread, image: e.target.files })
-                        // }
-                        bg="#262626"
-                        px="5"
-                        py="3"
-                        variant="filled"
-                        placeholder="Enter the image link"
-                        color="white"
-                        size="lg"
-                        _hover={{ borderColor: "gray", color: "white" }}
-                        _focus={{ bg: "#262626", borderColor: "#262620" }}
-                      />
-                      <Wrap
-                        position="absolute"
-                        marginTop=""
-                        top="155"
-                        left="30"
-                      >
-                        <WrapItem>
-                          <Avatar size="xl" name="Malik Mahdi" src={avatarr} />
-                          <LuImagePlus />
-                        </WrapItem>
-                      </Wrap>
-                    </Button>
-                    {/* <Avatar
-                      size="xl"
-                      name="Malik Mahdi"
-                      // src={_host_url + profile?.avatar}
-                      src={"img"}
-                    /> */}
-                  </WrapItem>
-                </Wrap>
-              </Box>
-
-              <Stack marginTop={"20"}>
-                <FormControl>
-                  <Box
-                    border={"1px"}
-                    borderRadius={"lg"}
-                    borderColor={"gray"}
-                    py={"3px"}
-                    gap={"1px"}
-                  >
-                    <FormLabel color="gray" fontSize={"sm"} px={"10px"}>
-                      Name
-                    </FormLabel>
-                    <Input
-                      type="email"
-                      size={"sm"}
-                      color={"white"}
-                      border={"none"}
-                      _focus={{ border: "none", outline: "none" }}
-                      _active={{ border: "none" }}
-                      value={profile?.user.fullname}
-                    />
-                  </Box>
-                </FormControl>
-              </Stack>
-              <HStack py="5" justifyContent="end">
-                <Button colorScheme="whatsapp" borderRadius="3xl" px="5">
-                  Save
-                </Button>
-              </HStack>
-            </Box>
-            {/*  */}
-          </ModalBody>
-        </ModalContent>
-      </Modal>
-    </>
-  );
-};
-
-export default ProfileSidebar;
+                {/* <Text color={"white"}>{formThread.image?.length}</Text> */
+}

@@ -21,29 +21,37 @@ import {
   TabPanel,
 } from "@chakra-ui/react";
 import { MdWavingHand } from "react-icons/md";
-
-// import avatar from "../assets/image/avatar.jpg";
-// import avatarr from "../assets/image/avatar2.jpg";
-// import { UseSelector, useSelector } from "react-redux";
-// import { RootState } from "../store/types/rootState";
 import { Link } from "react-router-dom";
 import { FaArrowLeftLong } from "react-icons/fa6";
 import { useAppSelector } from "../store/rootReducer";
 import { useState, useEffect } from "react";
 import { getThreadProfile } from "../libs/call/thread";
 import ThreadCard from "../features/ThreadCard";
-import ProfileAllPost from "../components/ProfileAllPost";
+// import ProfileAllPost from "../components/ProfileAllPost";
 import ProfileAllMedia from "../components/ProfileAllMedia";
 import ParentProfile from "../components/ParentProfile";
+import { IThread } from "../types/app";
 
 const ProfilePage = () => {
-  const { user } = useAppSelector((state) => state.auth);
+  // const { user } = useAppSelector((state) => state.auth);
   // const thread = useAppSelector((state) => state.thread);
   const profile = useAppSelector((state) => state.auth.user);
-  const _host_url = "http://localhost:5123/uploads/";
-  // {thread.threads.map((thread) => (
-  //   <ThreadCard key={thread.id} thread={thread} />
-  // ))}
+  // const _host_url = "http://localhost:5123/uploads/";
+
+  const [threadProfile, setThreadProfile] = useState<IThread[]>([]);
+
+  const handleThreadProfile = async () => {
+    try {
+      const { data } = await getThreadProfile();
+      setThreadProfile(data.data);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  useEffect(() => {
+    handleThreadProfile();
+  }, []);
 
   return (
     <>
@@ -59,7 +67,11 @@ const ProfilePage = () => {
           </TabList>
           <TabPanels>
             <TabPanel>
-              <ProfileAllPost />
+              <Box width={"100%"} bg={"#1D1D1D"}>
+                {threadProfile.map((thread) => (
+                  <ThreadCard key={thread.id} thread={thread} />
+                ))}
+              </Box>
             </TabPanel>
             <TabPanel>
               <ProfileAllMedia />

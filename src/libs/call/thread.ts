@@ -8,8 +8,24 @@ export const getThreadById = async (id: number) => {
   return await APIConfig.get(`thread/${id}`);
 };
 
+export const getThreadImages = async (threadId: number) => {
+  return await APIConfig.get(`images/${threadId}`, {
+    headers: {
+      Authorization: `Bearer ${localStorage.getItem("token")}`,
+    },
+  });
+};
+
 export const getThreadProfile = async () => {
   return await APIConfig.get("thread", {
+    headers: {
+      Authorization: `Bearer ${localStorage.getItem("token")}`,
+    },
+  });
+};
+
+export const getThreadUserId = async (id: number) => {
+  return await APIConfig.get(`threadUser/${id}`, {
     headers: {
       Authorization: `Bearer ${localStorage.getItem("token")}`,
     },

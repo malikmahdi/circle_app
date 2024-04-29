@@ -25,7 +25,6 @@ interface IThreadPostProps {
 }
 const FormPost: React.FC<IThreadPostProps> = ({ threadId, callback }) => {
   const profile = useAppSelector((state) => state.auth);
-  //   const { handleChange, handlePost } = UseThread();
   const [formThread, setFormThread] = useState<{
     content: string;
     image: FileList | null;
@@ -48,8 +47,6 @@ const FormPost: React.FC<IThreadPostProps> = ({ threadId, callback }) => {
       } else {
         dispatch(getThreadAsync());
       }
-
-      // window.location.reload();
 
       setFormThread({
         content: "",

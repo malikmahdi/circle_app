@@ -1,60 +1,64 @@
-import { Text, Button, Box, Wrap, WrapItem, Avatar } from "@chakra-ui/react";
+import {
+  Text,
+  Button,
+  Box,
+  Wrap,
+  WrapItem,
+  Avatar,
+  Flex,
+} from "@chakra-ui/react";
 import { useEffect, useState } from "react";
-import ISuggested from "../interface/Suggested";
+// import ISuggested from "../interface/Suggested";
+import { IProfile, IUser } from "../types/app";
+import { getUsers } from "../libs/call/user";
+import FollowButton from "../components/ButtonFollow";
 
-const SuggestedSidebar = (props: ISuggested) => {
-  const [isFollow, setIsFollow] = useState<boolean>(false);
+interface ISuggested {
+  data: IUser;
+}
 
-  const handleFollow = () => {
-    setIsFollow(!isFollow);
-  };
+const SuggestedSidebar: React.FC<ISuggested> = ({ data }) => {
+  // const [isFollow, setIsFollow] = useState<boolean>(false);
+  const _host_url = "http://localhost:5123/uploads/";
 
-  useEffect(() => {
-    handleFollow;
-  }, []);
+  // const handleFollow = () => {
+  //   setIsFollow(!isFollow);
+  // };
+
+  // useEffect(() => {
+  //   handleFollow;
+  // }, []);
 
   return (
     <>
-      <Box px="5" key={props.id}>
-        <Box display="flex" marginTop="5" justifyContent="space-between">
-          <Box display="flex" gap="5">
+      <Box px="5" key={data.id}>
+        <Box
+          display="flex"
+          alignItems={"center"}
+          marginTop="5"
+          justifyContent="space-between"
+        >
+          <Box display="flex" alignItems={"center"} gap="5">
             <Wrap paddingTop="">
               <WrapItem>
-                <Avatar name="Malik Mahdi" src={props.author_picture} />
+                <Avatar
+                  name={data.fullname}
+                  src={_host_url + data.profile?.avatar}
+                />
               </WrapItem>
             </Wrap>
 
             <Box display="flex" flexDir="column">
-              <Text fontSize="md" color="white">
-                {props.author_fullname}
-              </Text>
-              <Text color="gray">{props.author_username}</Text>
+              <Box gap={"2"}>
+                <Text fontSize="md" color="white">
+                  {data.fullname}
+                </Text>{" "}
+                <Text color="gray">@{data.username}</Text>
+              </Box>
             </Box>
           </Box>
 
-          {isFollow ? (
-            <Button
-              onClick={handleFollow}
-              colorScheme="gray"
-              color="white"
-              variant="outline"
-              borderRadius="3xl"
-              _hover={{ bg: "white", color: "black" }}
-            >
-              Following
-            </Button>
-          ) : (
-            <Button
-              onClick={handleFollow}
-              colorScheme="gray"
-              color="white"
-              variant="outline"
-              borderRadius="3xl"
-              _hover={{ bg: "white", color: "black" }}
-            >
-              Follow
-            </Button>
-          )}
+          <FollowButton followingId={data.id} />
         </Box>
       </Box>
     </>

@@ -27,7 +27,7 @@ import { useAppSelector } from "../store/rootReducer";
 
 interface IThreadProps {
   thread: IThread;
-  // callback: () => {};
+  // callback: () => Promise<void>;
 }
 
 const ThreadCard: React.FC<IThreadProps> = ({ thread }) => {
@@ -36,12 +36,10 @@ const ThreadCard: React.FC<IThreadProps> = ({ thread }) => {
 
   const user = useAppSelector((state) => state.auth.user);
 
-  console.log("threads", thread);
-
   return (
     <>
       <Box
-        // width={"50%"}
+        width={"100%"}
         bg="#1D1D1D"
         borderBottom="1px solid gray"
         px="10"
@@ -113,10 +111,10 @@ const ThreadCard: React.FC<IThreadProps> = ({ thread }) => {
           {/* <Box display={"flex"} flexWrap={"wrap"} gap="1"> */}
           <SimpleGrid columns={2} spacingX="10px" spacingY="20px">
             {thread.image &&
-              thread.image.map((image, index) => (
+              thread.image.map((item, index) => (
                 <Box bg="tomato" key={index}>
                   <Image
-                    src={_host_url + image.image}
+                    src={_host_url + item.image}
                     alt=""
                     style={{
                       width: "100%",
@@ -134,7 +132,7 @@ const ThreadCard: React.FC<IThreadProps> = ({ thread }) => {
           <Box display="flex" gap="">
             <LikeButton threadId={thread.id as number} />
             <Text color="gray" marginTop="2">
-              300
+              {thread._count?.like}
             </Text>
           </Box>
           <Box display="flex" gap="2">
@@ -145,7 +143,7 @@ const ThreadCard: React.FC<IThreadProps> = ({ thread }) => {
                 </Text>
               </Button>
             </Link>
-            <Text color="gray">300</Text>
+            <Text color="gray">{thread._count?.replies}</Text>
           </Box>
         </HStack>
       </Box>

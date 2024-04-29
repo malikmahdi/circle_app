@@ -19,6 +19,7 @@ import {
   TabPanels,
   Tab,
   TabPanel,
+  SimpleGrid,
 } from "@chakra-ui/react";
 import { MdWavingHand } from "react-icons/md";
 
@@ -30,22 +31,29 @@ import { Link, useParams } from "react-router-dom";
 import { FaArrowLeftLong } from "react-icons/fa6";
 import { useAppSelector } from "../store/rootReducer";
 import { useState, useEffect } from "react";
-import { getThreadProfile } from "../libs/call/thread";
+import {
+  getThreadImages,
+  getThreadProfile,
+  getThreadUserId,
+  getThreads,
+} from "../libs/call/thread";
 import ThreadCard from "../features/ThreadCard";
-import ProfileAllPost from "../components/ProfileAllPost";
+// import ProfileAllPost from "../components/ProfileAllPost";
 import ProfileAllMedia from "../components/ProfileAllMedia";
-import { IUser } from "../types/app";
+import { IThread, IUser } from "../types/app";
 import { getProfileById } from "../libs/call/profile";
 import ParentProfile from "../components/ParentProfile";
+import ProfileAllMediaUser from "../components/ProfileAllMediaUser";
 
 const ProfilePageById = () => {
   // const { user } = useAppSelector((state) => state.auth);
   // const thread = useAppSelector((state) => state.thread);
-  const profile = useAppSelector((state) => state.auth.user);
+  // const profile = useAppSelector((state) => state.auth.user);
 
   const { id } = useParams();
 
   const _host_url = "http://localhost:5123/uploads/";
+  const [threadImage, setThreadImage] = useState([]);
 
   const [userDetail, setUserDetail] = useState<any>({
     user: {
@@ -59,6 +67,18 @@ const ProfilePageById = () => {
     cover: "",
   });
 
+  const [threadUserId, setThreadUserId] = useState<IThread>();
+
+  const handleThreadUserId = async (id: Number) => {
+    try {
+      const { data } = await getThreadUserId(Number(id));
+
+      setThreadUserId(data.data);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   const fetchDataUser = async () => {
     try {
       const { data } = await getProfileById(Number(id));
@@ -69,100 +89,25 @@ const ProfilePageById = () => {
     }
   };
 
+  const handleThreadImages = async (id: number) => {
+    try {
+      const { data } = await getThreadImages(id);
+
+      setThreadImage(data.data);
+    } catch (error) {}
+  };
+
   useEffect(() => {
     fetchDataUser();
+    handleThreadUserId(Number(id));
+    handleThreadImages(Number(id));
   }, [id]);
 
-  console.log("detail user", userDetail);
+  // console.log("data image", threadImage);
+  console.log("data detail", threadUserId);
 
   return (
     <>
-      {/* <Card mx="3" marginTop="5" bg="#1d1d1d">
-        <Box px="5" paddingTop="5">
-          <Text
-            display="flex"
-            alignItems="center"
-            fontSize="3xl"
-            as="b"
-            color="white"
-            gap="3"
-          >
-            <Link to="/">
-              <FaArrowLeftLong />
-            </Link>
-            Hallo <MdWavingHand />
-            {userDetail.user.fullname}
-          </Text>
-        </Box>
-        <CardBody>
-          <Box position="relative">
-            <Image
-              src={_host_url + userDetail.cover}
-              borderRadius="lg"
-              height={"250px"}
-              width={"100%"}
-            />
-          </Box>
-
-          <Box display="flex" marginTop="3" justifyContent="space-between">
-            <Wrap position="absolute" marginTop="" top="270" left="30">
-              <WrapItem>
-                <Avatar
-                  size="xl"
-                  name={user?.user.fullname}
-                  src={_host_url + userDetail.avatar}
-                />
-              </WrapItem>
-            </Wrap>
-
-            <Box position="absolute" right="5"> */}
-      {/* <Button
-                  colorScheme="gray"
-                  color="white"
-                  variant="outline"
-                  borderRadius="3xl"
-                  _hover={{ bg: "white", color: "black" }}
-                >
-                  Edit Profile
-                </Button> */}
-      {/* </Box>
-          </Box>
-
-          <Stack mt="10">
-            <Heading size="md" color="white">
-              ✨ {userDetail.user.fullname}✨
-            </Heading>
-            <Text color="gray">@{userDetail.user.username}</Text>
-            <Text color="white" fontSize="2xl">
-              {userDetail.bio}
-            </Text>
-            <HStack gap="1">
-              <Box display="flex" gap="1">
-                <Text fontSize="md" color="white">
-                  300
-                </Text>
-                <Text fontSize="md" color="gray">
-                  Following
-                </Text>
-              </Box>
-
-              <Box display="flex" gap="1">
-                <Text fontSize="md" color="white">
-                  300
-                </Text>
-                <Text fontSize="md" color="gray">
-                  Followers
-                </Text>
-              </Box>
-            </HStack>
-          </Stack>
-        </CardBody>
-      </Card> */}
-
-      {/* {userDetail.map((data: any) => (
-        <ParentProfile profile={data} key={data.id} />
-      ))} */}
-
       <ParentProfile profile={userDetail} />
 
       <HStack w={"100%"}>
@@ -171,14 +116,41 @@ const ProfilePageById = () => {
             <Tab w={"100%"}>
               <Text _hover={{}}>All Post</Text>
             </Tab>
-            <Tab>All Media</Tab>
+            <Tab>
+              <Text _hover={{}}>All Media</Text>
+            </Tab>
           </TabList>
           <TabPanels>
             <TabPanel>
-              <ProfileAllPost />
+              {threadUserId?.map((thread: IThread) => (
+                <ThreadCard key={thread.id} thread={thread} />
+              ))}
             </TabPanel>
             <TabPanel>
-              <ProfileAllMedia />
+              {threadUserId?.map((thread: IThread) => (
+                <Box>
+                  {/* {thread.image &&
+                    thread.image.map((item) => (
+                      <Image src={_host_url + item.image}></Image>
+                    ))} */}
+                  <SimpleGrid columns={2} spacingX="10px" spacingY="20px">
+                    {thread.image &&
+                      thread.image.map((item, index) => (
+                        <Box bg="tomato" key={index} width={""}>
+                          <Image
+                            src={_host_url + item.image}
+                            alt=""
+                            style={{
+                              width: "100%",
+                              height: "100%",
+                              objectFit: "cover",
+                            }}
+                          />
+                        </Box>
+                      ))}
+                  </SimpleGrid>
+                </Box>
+              ))}
             </TabPanel>
           </TabPanels>
         </Tabs>

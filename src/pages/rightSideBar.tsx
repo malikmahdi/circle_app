@@ -3,16 +3,33 @@ import { Box, Text } from "@chakra-ui/react";
 import SuggestedSidebar from "../features/SuggestedSidebar";
 import FooterSideBar from "../components/FooterSideBar";
 import DataSuggested from "../mocks/suggested.json";
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import ISuggested from "../interface/Suggested";
 import ProfileSidebar from "../components/ProfileSideBar";
+import { getFollower } from "../libs/call/follow";
+import { getUsers } from "../libs/call/user";
+import { IUser } from "../types/app";
 
 const RightSideBar = (): React.JSX.Element => {
   const [data, setData] = React.useState<ISuggested[]>([]);
 
+  const [users, setUsers] = useState<IUser[]>([]);
+
+  const getAllUsers = async () => {
+    try {
+      const res = await getUsers();
+      setUsers(res.data.data);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   useEffect(() => {
     setData(DataSuggested);
+    getAllUsers();
   }, []);
+
+  console.log("users", users);
 
   return (
     <>
@@ -32,14 +49,8 @@ const RightSideBar = (): React.JSX.Element => {
           overflow="auto"
           paddingBottom="5"
         >
-          {data.map((item) => (
-            <SuggestedSidebar
-              key={item.id}
-              id={item.id}
-              author_fullname={item.author_fullname}
-              author_username={item.author_username}
-              author_picture={item.author_picture}
-            />
+          {users.map((item) => (
+            <SuggestedSidebar data={item} />
           ))}
         </Box>
         <FooterSideBar />

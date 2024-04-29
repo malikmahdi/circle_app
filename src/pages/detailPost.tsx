@@ -30,6 +30,7 @@ import RepliesPost from "../components/RepliesPost";
 import FormPost from "../components/FormPost";
 import { useAppDispatch, useAppSelector } from "../store/rootReducer";
 import { getRepliesAsync } from "../store/async/thread";
+import LikeButton from "../components/ButtonLike";
 
 const DetailThread = (): React.JSX.Element => {
   const { threadId } = useParams();
@@ -87,7 +88,8 @@ const DetailThread = (): React.JSX.Element => {
           </Link>
           Status
         </Text>
-        <Box
+        <ThreadCard thread={detailThread} />
+        {/* <Box
           width="100%"
           bg="#1D1D1D"
           borderBottom="1px"
@@ -132,9 +134,9 @@ const DetailThread = (): React.JSX.Element => {
                 <Text color="white" textAlign="start">
                   {detailThread.content}
                 </Text>
-              </Box>
+              </Box> */}
 
-              {/* <Box width="100%" height="100%">
+        {/* <Box width="100%" height="100%">
                 <Image
                   src={}
                   alt="Dan Abramov"
@@ -142,7 +144,7 @@ const DetailThread = (): React.JSX.Element => {
                   objectFit="cover"
                 />
               </Box> */}
-              <SimpleGrid columns={2} spacingX="10px" spacingY="20px">
+        {/* <SimpleGrid columns={2} spacingX="10px" spacingY="20px">
                 {detailThread.image &&
                   detailThread.image.map((image) => (
                     <Box bg="tomato">
@@ -167,22 +169,12 @@ const DetailThread = (): React.JSX.Element => {
                 <Text color="gray">Jul 26 2020</Text>
               </HStack>
               <HStack direction="row" spacing="5">
-                <Box display="flex" gap="2">
-                  <Text fontSize="2xl" marginTop="1">
-                    <Button
-                      type="button"
-                      // onClick={handleLike}
-                      colorScheme="gray"
-                      variant="link"
-                      size="0"
-                    >
-                      {/* {isLike ? <FaHeart color="red" /> : <AiOutlineHeart />} */}
-                    </Button>
-                  </Text>
+                <Box display="flex" gap="2"> */}
+        {/* <LikeButton threadId={thread.id as number} />
                   <Text color="gray" marginTop="2">
-                    300
-                  </Text>
-                </Box>
+                    {thread._count?.like}
+                  </Text> */}
+        {/* </Box>
                 <Box display="flex" gap="2">
                   <Button colorScheme="gray" variant="link" size="0">
                     <Text fontSize="2xl">
@@ -194,7 +186,7 @@ const DetailThread = (): React.JSX.Element => {
               </HStack>
             </Box>
           </VStack>
-        </Box>
+        </Box> */}
         {/* <RepliesPost /> */}
         <Box>
           <FormPost callback={fetchThreadDetail} threadId={Number(threadId)} />

@@ -5,6 +5,13 @@ export interface IThread {
   userId?: number;
   threadId?: number;
   author?: IUser;
+  _count?: ICount;
+  map?: any;
+}
+
+interface ICount {
+  replies?: string;
+  like?: string;
 }
 
 interface ThreadImage {
@@ -17,6 +24,9 @@ export interface IUser {
   username: string;
   email: string;
   profile?: IProfile;
+  _count: ICount;
+  follower?: any;
+  following?: any;
 }
 
 export interface IProfile {
@@ -25,4 +35,9 @@ export interface IProfile {
   avatar?: string;
   cover?: string;
   user: IUser;
+}
+
+interface ICount {
+  follower?: string;
+  following?: string;
 }

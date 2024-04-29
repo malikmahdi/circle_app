@@ -32,7 +32,7 @@ import { useAppSelector } from "../store/rootReducer";
 import { useState, useEffect } from "react";
 import { getThreadProfile } from "../libs/call/thread";
 import ThreadCard from "../features/ThreadCard";
-import ProfileAllPost from "../components/ProfileAllPost";
+// import ProfileAllPost from "../components/ProfileAllPost";
 import ProfileAllMedia from "../components/ProfileAllMedia";
 import { IProfile } from "../types/app";
 
@@ -47,7 +47,7 @@ const ParentProfile: React.FC<IProfileProps> = ({ profile }) => {
 
   return (
     <>
-      <Card mx="3" marginTop="5" bg="#1d1d1d" height="">
+      <Card mx="3" marginTop="5" bg="#1d1d1d">
         <Box px="5" paddingTop="5">
           <Text
             display="flex"
@@ -60,8 +60,8 @@ const ParentProfile: React.FC<IProfileProps> = ({ profile }) => {
             <Link to="/">
               <FaArrowLeftLong />
             </Link>
-            Hallo <MdWavingHand />
             {profile?.user.fullname}
+            <MdWavingHand />
           </Text>
         </Box>
         <CardBody>
@@ -70,7 +70,7 @@ const ParentProfile: React.FC<IProfileProps> = ({ profile }) => {
               src={_host_url + profile.cover}
               borderRadius="lg"
               height={"250px"}
-              width={"1000px"}
+              width={"100%"}
             />
           </Box>
 

@@ -8,6 +8,7 @@ import LoginLayout from "./layouts/loginLayout";
 import DetailPost from "./pages/detailPost";
 import RegisterLayout from "./layouts/registerLayout";
 import ProfilePageById from "./pages/profileById";
+import FollowPage from "./pages/follow";
 // import ErrorPage from "./pages/errorPage";
 // import DetailLayout from "./layouts/detailLayout";
 // import RegisterLayout from "./layouts/registerLayout";
@@ -61,8 +62,9 @@ const App: React.FC = () => {
     <Routes>
       <Route path="/" element={<BaseLayout />}>
         <Route index element={<Home />} />
-        <Route path="search" element={<SearchPage />} />
         <Route path="profile" element={<ProfilePage />} />
+        <Route path="search" element={<SearchPage />} />
+        <Route path="follow" element={<FollowPage />} />
         <Route path="profile/:id" element={<ProfilePageById />} />
         <Route path="thread/:threadId" element={<DetailPost />} />
         {/* <Route path="search" element={<Home />} />

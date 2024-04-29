@@ -7,9 +7,10 @@ import APIConfig from "../libs/api";
 
 interface ILikeButtonProps {
   threadId: number;
+  callback?: () => Promise<void>;
 }
 
-const LikeButton: React.FC<ILikeButtonProps> = ({ threadId }) => {
+const LikeButton: React.FC<ILikeButtonProps> = ({ threadId, callback }) => {
   const { token } = useAppSelector((state) => state.auth);
   const [liked, setLiked] = useState(false);
 
@@ -40,8 +41,7 @@ const LikeButton: React.FC<ILikeButtonProps> = ({ threadId }) => {
           },
         }
       );
-      console.log(res);
-      await getLike();
+      getLike();
     } catch (error) {
       console.log(error);
     }
@@ -55,7 +55,7 @@ const LikeButton: React.FC<ILikeButtonProps> = ({ threadId }) => {
     <>
       <Button
         aria-label="delete"
-        bg={"white"}
+        bg={"none"}
         fontSize={"2xl"}
         width={""}
         _hover={{ backgroundColor: "none" }}

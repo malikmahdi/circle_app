@@ -28,5 +28,7 @@ export const RegisterApi = async (body: IRegisterBody) => {
 };
 
 export const getUsers = async () => {
-  return await APIConfig.get("users");
+  return await APIConfig.get("users", {
+    headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
+  });
 };

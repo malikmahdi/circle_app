@@ -22,12 +22,22 @@ interface IBody extends TBody {
 
 export const updateProfile = async (token: string, body: IBody) => {
   const formData = new FormData();
-
   Object.keys(body).map((key) => {
-    if (body[key]) {
+    if (body[key] !== null && body[key] !== undefined) {
       formData.append(key, body[key] as Blob);
     }
   });
+
+  try {
+    const res = await APIConfig.patch("profile", formData, {
+      headers: {
+        Authorization: `Bearer ${localStorage.token}`,
+      },
+    });
+    return res.data;
+  } catch (error) {
+    console.log(error);
+  }
 };
 
 export const getProfileById = async (id: number) => {
