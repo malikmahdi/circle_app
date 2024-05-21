@@ -1,18 +1,7 @@
 import {
-  Card,
-  CardHeader,
-  CardBody,
-  CardFooter,
   Image,
-  Stack,
-  Heading,
   Text,
-  ButtonGroup,
-  Button,
   Box,
-  Wrap,
-  WrapItem,
-  Avatar,
   HStack,
   Tabs,
   TabList,
@@ -21,13 +10,8 @@ import {
   TabPanel,
   SimpleGrid,
 } from "@chakra-ui/react";
-import { MdWavingHand } from "react-icons/md";
 
-// import avatar from "../assets/image/avatar.jpg";
-// import avatarr from "../assets/image/avatar2.jpg";
-// import { UseSelector, useSelector } from "react-redux";
-// import { RootState } from "../store/types/rootState";
-import { Link, useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { FaArrowLeftLong } from "react-icons/fa6";
 import { useAppSelector } from "../store/rootReducer";
 import { useState, useEffect } from "react";
@@ -38,19 +22,13 @@ import {
   getThreads,
 } from "../libs/call/thread";
 import ThreadCard from "../features/ThreadCard";
-// import ProfileAllPost from "../components/ProfileAllPost";
-import ProfileAllMedia from "../components/ProfileAllMedia";
-import { IThread, IUser } from "../types/app";
+import { IThread } from "../types/app";
 import { getProfileById } from "../libs/call/profile";
 import ParentProfile from "../components/ParentProfile";
-import ProfileAllMediaUser from "../components/ProfileAllMediaUser";
 
 const ProfilePageById = () => {
-  // const { user } = useAppSelector((state) => state.auth);
-  // const thread = useAppSelector((state) => state.thread);
-  // const profile = useAppSelector((state) => state.auth.user);
-
   const { id } = useParams();
+  const navigate = useNavigate();
 
   const _host_url = "http://localhost:5123/uploads/";
   const [threadImage, setThreadImage] = useState([]);
@@ -61,6 +39,10 @@ const ProfilePageById = () => {
       fullname: "",
       username: "",
       email: "",
+      _count: {
+        following: "",
+        follower: "",
+      },
     },
     bio: "",
     avatar: "",
@@ -103,9 +85,6 @@ const ProfilePageById = () => {
     handleThreadImages(Number(id));
   }, [id]);
 
-  // console.log("data image", threadImage);
-  console.log("data detail", threadUserId);
-
   return (
     <>
       <ParentProfile profile={userDetail} />
@@ -129,14 +108,18 @@ const ProfilePageById = () => {
             <TabPanel>
               {threadUserId?.map((thread: IThread) => (
                 <Box>
-                  {/* {thread.image &&
-                    thread.image.map((item) => (
-                      <Image src={_host_url + item.image}></Image>
-                    ))} */}
-                  <SimpleGrid columns={2} spacingX="10px" spacingY="20px">
+                  <SimpleGrid columns={2} spacingX="10px">
                     {thread.image &&
                       thread.image.map((item, index) => (
-                        <Box bg="tomato" key={index} width={""}>
+                        <Box
+                          bg="tomato"
+                          mt={"10px"}
+                          key={index}
+                          width={""}
+                          onClick={() => {
+                            navigate(`/media/${thread.id}`);
+                          }}
+                        >
                           <Image
                             src={_host_url + item.image}
                             alt=""

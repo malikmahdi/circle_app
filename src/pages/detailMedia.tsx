@@ -2,22 +2,47 @@ import React, { useEffect, useState } from "react";
 import { FaArrowLeftLong } from "react-icons/fa6";
 import { useParams } from "react-router-dom";
 
-import { Box, Text } from "@chakra-ui/react";
+import {
+  Avatar,
+  Box,
+  Button,
+  HStack,
+  Heading,
+  Image,
+  SimpleGrid,
+  Text,
+  VStack,
+  Wrap,
+  WrapItem,
+} from "@chakra-ui/react";
+import avatarr from "../assets/image/avatar2.jpg";
+import { TbMessage, TbPointFilled } from "react-icons/tb";
 import { Link } from "react-router-dom";
-
+import { FaHeart } from "react-icons/fa";
+import { AiOutlineHeart } from "react-icons/ai";
+import APIConfig from "../libs/api";
 import { getReplies, getThreadById } from "../libs/call/thread";
 import { IThread } from "../types/app";
+// import RepliesPost from "../components/RepliesPost";
+import RepliesDetail from "../components/RepliesDetail";
 import ThreadCard from "../features/ThreadCard";
+import RepliesPost from "../components/RepliesPost";
 import FormPost from "../components/FormPost";
+import { useAppDispatch, useAppSelector } from "../store/rootReducer";
+import { getRepliesAsync } from "../store/async/thread";
+import LikeButton from "../components/ButtonLike";
 
-const DetailThread = (): React.JSX.Element => {
+const DetailThreadMedia = (): React.JSX.Element => {
   const { threadId } = useParams();
+  const _host_url = "http://localhost:5123/uploads/";
   const [detailThread, setDetailThread] = useState<IThread>({
     userId: 0,
     content: "",
     image: [],
     id: 0,
   });
+  // const { thread } = useAppSelector((state) => state);
+  // const dispatch = useAppDispatch();
 
   const [replies, setReplies] = useState<IThread[]>([]);
 
@@ -55,7 +80,7 @@ const DetailThread = (): React.JSX.Element => {
           fontSize="4xl"
           as="b"
           color="white"
-          px="7"
+          px="10"
           gap="5"
         >
           <Link to="/">
@@ -81,4 +106,4 @@ const DetailThread = (): React.JSX.Element => {
   );
 };
 
-export default DetailThread;
+export default DetailThreadMedia;

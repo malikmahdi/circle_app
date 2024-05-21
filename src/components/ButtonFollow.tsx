@@ -18,7 +18,6 @@ const FollowButton: React.FC<IFollowButtonProps> = ({
 }) => {
   const { user } = useAppSelector((state) => state.auth);
   const [followed, setFollowed] = useState<boolean>(false);
-  console.log("ini userId", followingId);
 
   const getFollow = async () => {
     try {
@@ -54,7 +53,6 @@ const FollowButton: React.FC<IFollowButtonProps> = ({
         getFollow();
       }
 
-      console.log(res);
       // await getFollow();
     } catch (error) {
       console.log(error);
@@ -74,8 +72,6 @@ const FollowButton: React.FC<IFollowButtonProps> = ({
     getFollow();
     // handleFollow;
   }, []);
-
-  console.log("btn follow", followed);
 
   return (
     <>

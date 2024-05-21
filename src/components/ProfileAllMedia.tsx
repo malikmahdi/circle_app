@@ -3,6 +3,7 @@ import React, { useEffect, useState } from "react";
 import { getThreadImages, getThreadProfile } from "../libs/call/thread";
 import { IThread, ThreadImage } from "../types/app";
 import ThreadCard from "../features/ThreadCard";
+import { useNavigate } from "react-router-dom";
 
 interface IProfileMedia {
   media: ThreadImage;
@@ -11,6 +12,7 @@ interface IProfileMedia {
 const ProfileAllMedia: React.FC = () => {
   const [threadProfile, setThreadProfile] = useState<IThread[]>([]);
   const _host_url = "http://localhost:5123/uploads/";
+  const navigate = useNavigate();
 
   const handleThreadProfile = async () => {
     try {
@@ -26,30 +28,34 @@ const ProfileAllMedia: React.FC = () => {
   }, []);
 
   return (
-    <Box width={"100%"} bg={"#1D1D1D"}>
+    <>
       {threadProfile.map((thread) => (
         <Box key={thread.id}>
-          <SimpleGrid columns={2} spacingX="20px" spacingY="20px">
+          <SimpleGrid columns={2} spacingX="10px">
             {thread.image &&
               thread.image.map((item, index) => (
-                <Box key={index}>
-                  <Box bg="tomato" mt={"8px"}>
-                    <Image
-                      src={_host_url + item.image}
-                      alt="Dan Abramov"
-                      style={{
-                        width: "100%",
-                        height: "100%",
-                        objectFit: "cover",
-                      }}
-                    />
-                  </Box>
+                <Box
+                  key={index}
+                  mt={"10px"}
+                  onClick={() => {
+                    navigate(`/media/${thread.id}`);
+                  }}
+                >
+                  <Image
+                    src={_host_url + item.image}
+                    alt=""
+                    style={{
+                      width: "100%",
+                      height: "100%",
+                      objectFit: "cover",
+                    }}
+                  />
                 </Box>
               ))}
           </SimpleGrid>
         </Box>
       ))}
-    </Box>
+    </>
   );
 };
 

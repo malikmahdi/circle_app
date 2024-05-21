@@ -35,7 +35,7 @@ const BaseLayout: React.FC = () => {
     <>
       <Flex color="white" height="100vh" backgroundColor={"#1D1D1D"}>
         <Box flex={1}>
-          <Navbar asHome="b" />
+          <Navbar />
         </Box>
         <Box flex={2.5}>
           <Outlet />

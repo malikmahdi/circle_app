@@ -18,16 +18,7 @@ interface ISuggested {
 }
 
 const SuggestedSidebar: React.FC<ISuggested> = ({ data }) => {
-  // const [isFollow, setIsFollow] = useState<boolean>(false);
   const _host_url = "http://localhost:5123/uploads/";
-
-  // const handleFollow = () => {
-  //   setIsFollow(!isFollow);
-  // };
-
-  // useEffect(() => {
-  //   handleFollow;
-  // }, []);
 
   return (
     <>
@@ -58,7 +49,7 @@ const SuggestedSidebar: React.FC<ISuggested> = ({ data }) => {
             </Box>
           </Box>
 
-          <FollowButton followingId={data.id} />
+          <FollowButton followingId={data.id as number} />
         </Box>
       </Box>
     </>

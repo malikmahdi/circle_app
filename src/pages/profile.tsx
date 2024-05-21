@@ -33,8 +33,6 @@ import ParentProfile from "../components/ParentProfile";
 import { IThread } from "../types/app";
 
 const ProfilePage = () => {
-  // const { user } = useAppSelector((state) => state.auth);
-  // const thread = useAppSelector((state) => state.thread);
   const profile = useAppSelector((state) => state.auth.user);
   // const _host_url = "http://localhost:5123/uploads/";
 
@@ -52,10 +50,8 @@ const ProfilePage = () => {
   useEffect(() => {
     handleThreadProfile();
   }, []);
-
   return (
     <>
-      {/* <ParentProfile profile={profile} /> */}
       {profile && <ParentProfile profile={profile} />}
       <HStack w={"100%"}>
         <Tabs isFitted w={"100%"}>

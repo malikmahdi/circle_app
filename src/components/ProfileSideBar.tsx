@@ -63,14 +63,14 @@ const ProfileSidebar = () => {
               src={_host_url + profile?.cover}
               alt="cover image"
               borderRadius="lg"
-              height={"150px"}
-              // width={"1000px"}
+              height={"130px"}
+              width={"100%"}
               objectFit="cover"
             />
           </Box>
 
           <Box display="flex" marginTop="3" justifyContent="space-between">
-            <Wrap position="absolute" marginTop="" top="170" left="30">
+            <Wrap position="absolute" marginTop="" top="155" left="30">
               <WrapItem>
                 <Avatar
                   size="xl"

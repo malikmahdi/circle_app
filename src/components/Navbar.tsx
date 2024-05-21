@@ -21,31 +21,11 @@ import { Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 import { useAppDispatch } from "../store/rootReducer";
 import { SET_LOGOUT } from "../store/slice/authSlice";
-// import { LOGOUT } from "../store/rootReducer";
 
-// const listMenuNav = [
-//   {
-//     icon: {`<AiOutlineHome />`},
-//     title: "Home",
-//     link: "/",
-//   },
-//   {
-//     icon: ``,
-//     title: "search",
-//     link: "/search",
-//   },
-//   {
-//     icon: ``,
-//     title: "Profile",
-//     link: "/profile",
-//   },
-// ];
-
-const Navbar = (props: any) => {
+const Navbar = () => {
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
 
-  const { asHome, asSearch, asFollows, asProfile } = props;
   const { isOpen, onOpen, onClose } = useDisclosure();
   const [size, setSize] = React.useState("md");
 
@@ -53,11 +33,6 @@ const Navbar = (props: any) => {
     setSize(newSize);
     onOpen();
   };
-
-  // const handleLogout = () => {
-  //   dispatch(LOGOUT());
-  //   navigate("/auth/login");
-  // };
 
   const sizes = ["xl"];
 
@@ -70,8 +45,8 @@ const Navbar = (props: any) => {
         position="fixed"
         borderRight="1px"
         borderColor="gray"
-        // gap={5}
-        py="5"
+        py="20px"
+        px="20px"
         width="20%"
         justifyContent="space-between"
       >
@@ -87,9 +62,10 @@ const Navbar = (props: any) => {
               <Text
                 fontSize="xl"
                 display="flex"
-                as={asHome}
                 alignItems="center"
                 gap="2"
+                _hover={{ color: "#5AC35F" }}
+                _focus={{ color: "#5AC35F" }}
               >
                 <AiOutlineHome />
                 Home
@@ -100,9 +76,9 @@ const Navbar = (props: any) => {
               <Text
                 fontSize="xl"
                 display="flex"
-                as={asSearch}
                 alignItems="center"
                 gap="2"
+                _hover={{ color: "#5AC35F" }}
               >
                 <RiUserSearchLine />
                 Seach
@@ -113,9 +89,9 @@ const Navbar = (props: any) => {
               <Text
                 fontSize="xl"
                 display="flex"
-                as={asFollows}
                 alignItems="center"
                 gap="2"
+                _hover={{ color: "#5AC35F" }}
               >
                 <AiOutlineHeart />
                 Follows
@@ -126,9 +102,9 @@ const Navbar = (props: any) => {
               <Text
                 fontSize="xl"
                 display="flex"
-                as={asProfile}
                 alignItems="center"
                 gap="2"
+                _hover={{ color: "#5AC35F" }}
               >
                 <CgProfile />
                 Profile
@@ -142,10 +118,8 @@ const Navbar = (props: any) => {
             colorScheme="whatsapp"
             borderRadius="3xl"
             px="20"
-            mx="5"
             onClick={() => handleSizeClick(size)}
             key={size}
-            m={3}
           >
             Create Post
           </Button>

@@ -8,7 +8,7 @@ export const getProfile = async (token: string) => {
   });
 };
 
-type TKey = "bio" | "avatar" | "cover";
+// type TKey = "bio" | "avatar" | "cover";
 
 type TBody = {
   [key: string]: string | File | null | undefined;
@@ -16,14 +16,16 @@ type TBody = {
 
 interface IBody extends TBody {
   bio?: string | null;
-  avatar?: File | null;
-  cover?: File | null;
+  avatar?: File | null | string;
+  cover?: File | null | string;
+  fullname?: string | null;
+  username?: string | null;
 }
 
 export const updateProfile = async (token: string, body: IBody) => {
   const formData = new FormData();
   Object.keys(body).map((key) => {
-    if (body[key] !== null && body[key] !== undefined) {
+    if (body[key]) {
       formData.append(key, body[key] as Blob);
     }
   });
@@ -31,7 +33,7 @@ export const updateProfile = async (token: string, body: IBody) => {
   try {
     const res = await APIConfig.patch("profile", formData, {
       headers: {
-        Authorization: `Bearer ${localStorage.token}`,
+        Authorization: `Bearer ${token}`,
       },
     });
     return res.data;

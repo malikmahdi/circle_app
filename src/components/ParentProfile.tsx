@@ -85,17 +85,7 @@ const ParentProfile: React.FC<IProfileProps> = ({ profile }) => {
               </WrapItem>
             </Wrap>
 
-            <Box position="absolute" right="5">
-              {/* <Button
-                colorScheme="gray"
-                color="white"
-                variant="outline"
-                borderRadius="3xl"
-                _hover={{ bg: "white", color: "black" }}
-              >
-                Edit Profile
-              </Button> */}
-            </Box>
+            <Box position="absolute" right="5"></Box>
           </Box>
 
           <Stack mt="10">
@@ -109,7 +99,7 @@ const ParentProfile: React.FC<IProfileProps> = ({ profile }) => {
             <HStack gap="1">
               <Box display="flex" gap="1">
                 <Text fontSize="md" color="white">
-                  300
+                  {profile?.user?._count.follower}
                 </Text>
                 <Text fontSize="md" color="gray">
                   Following
@@ -118,7 +108,7 @@ const ParentProfile: React.FC<IProfileProps> = ({ profile }) => {
 
               <Box display="flex" gap="1">
                 <Text fontSize="md" color="white">
-                  300
+                  {profile?.user?._count.following}
                 </Text>
                 <Text fontSize="md" color="gray">
                   Followers

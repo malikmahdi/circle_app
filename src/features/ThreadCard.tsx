@@ -42,8 +42,8 @@ const ThreadCard: React.FC<IThreadProps> = ({ thread }) => {
         width={"100%"}
         bg="#1D1D1D"
         borderBottom="1px solid gray"
-        px="10"
-        py="8"
+        px="7"
+        py="5"
 
         // key={thread.id}
       >

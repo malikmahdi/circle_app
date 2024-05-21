@@ -1,65 +1,122 @@
-import React, { useRef } from "react";
+import React, { useRef, useState } from "react";
 import {
-  Card,
-  CardHeader,
-  CardBody,
-  CardFooter,
   Image,
-  Stack,
-  Heading,
   Text,
-  ButtonGroup,
   Button,
   Box,
-  Wrap,
-  WrapItem,
-  Avatar,
-  HStack,
   FormControl,
-  FormLabel,
   Input,
   InputGroup,
-  useDisclosure,
+  useToast,
 } from "@chakra-ui/react";
-import avatar from "../assets/image/avatar.jpg";
-import avatarr from "../assets/image/avatar2.jpg";
-import { UseSelector, useSelector } from "react-redux";
-// import { RootState } from "../store/types/rootState";
 import { LuImagePlus } from "react-icons/lu";
-import { useAppSelector } from "../store/rootReducer";
+import { useAppDispatch, useAppSelector } from "../store/rootReducer";
 import { updateProfile } from "../libs/call/profile";
+import { getProfileAsync } from "../store/async/auth";
+import { getThreadAsync } from "../store/async/thread";
+
+import imageEdit from "../assets/image/img-edit-1.jpg";
 
 const ModalEditProfile = () => {
-  const [formEditProfile, setFormEditProfile] = React.useState<{
-    fullname?: string;
-    bio?: string;
-    cover?: FileList | null;
-    avatar?: FileList | null;
-  }>({ fullname: "", bio: "", cover: null, avatar: null });
-
-  const profile = useAppSelector((state) => state.auth.user);
   const _host_url = "http://localhost:5123/uploads/";
+  const profile = useAppSelector((state) => state.auth.user);
+  const token = useAppSelector((state) => state.auth.token);
+  const dispatch = useAppDispatch();
+  const toast = useToast();
+  const [formEditProfile, setFormEditProfile] = React.useState<{
+    bio?: string;
+    avatar?: File | null | string;
+    cover?: File | null | string;
+    username?: string;
+    fullname?: string;
+  }>({
+    bio: profile?.bio || "",
+    avatar: null,
+    cover: null,
+    username: profile?.user.username || "",
+    fullname: profile?.user.fullname || "",
+  });
 
-  const handleEditProfile = async (e: React.FormEvent): Promise<void> => {
-    await updateProfile(formEditProfile);
+  const [imagePreviewAvatar, setImagePreviewAvatar] = useState<
+    string | undefined
+  >();
+
+  const [imagePreviewCover, setImagePreviewCover] = useState<
+    string | undefined
+  >();
+
+  const handleImageAvatar = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+
+    if (file) {
+      const imageUrl = URL.createObjectURL(file);
+      setImagePreviewAvatar(imageUrl);
+    }
+
+    setFormEditProfile({
+      ...formEditProfile,
+      avatar: file || profile?.avatar || null,
+    });
   };
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setFormEditProfile({ ...formEditProfile, [e.target.name]: e.target.value });
+  const handleImageCover = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+
+    if (file) {
+      const imageUrl = URL.createObjectURL(file);
+      setImagePreviewCover(imageUrl);
+    }
+
+    setFormEditProfile({
+      ...formEditProfile,
+      cover: file || profile?.cover || null,
+    });
   };
 
-  const handleChangeImage = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setFormEditProfile({ ...formEditProfile, [e.target.name]: e.target.files });
-  };
+  const handleEditProfile = async (e: React.FormEvent) => {
+    e.preventDefault();
+    try {
+      await updateProfile(token, formEditProfile);
 
-  const inputRef = useRef<HTMLInputElement>(null);
-  const handleImage = () => {
-    if (inputRef.current) {
-      inputRef.current.click();
+      toast({
+        title: "Profile updated!",
+        status: "success",
+        position: "top",
+        // duration: 3000,
+        isClosable: true,
+      });
+
+      setFormEditProfile(formEditProfile);
+
+      await dispatch(getProfileAsync(token!));
+      dispatch(getThreadAsync());
+
+      // window.location.reload();
+    } catch (error) {
+      console.log(error);
     }
   };
 
-  console.log(formEditProfile);
+  const handleInput = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { name, value } = e.target;
+
+    setFormEditProfile({ ...formEditProfile, [name]: value });
+  };
+
+  const inputAvatarRef = useRef<HTMLInputElement>(null);
+  const inputCoverRef = useRef<HTMLInputElement>(null);
+
+  const handleAvatar = () => {
+    if (inputAvatarRef.current) {
+      inputAvatarRef.current.click();
+    }
+  };
+
+  const handleCover = () => {
+    if (inputCoverRef.current) {
+      inputCoverRef.current.click();
+    }
+  };
 
   return (
     <>
@@ -72,79 +129,42 @@ const ModalEditProfile = () => {
 
         <form onSubmit={handleEditProfile}>
           <FormControl>
-            <Box my={"20px"} py={"90px"}>
-              <Button
-                onClick={handleImage}
-                fontSize="3xl"
-                background={"none"}
+            <Box position={"relative"}>
+              <Image
                 width={"100%"}
-                _hover={{ backgroundColor: "none", color: "white" }}
-              >
-                <Input
-                  ref={inputRef}
-                  hidden
-                  type="file"
-                  name="cover"
-                  onChange={handleChangeImage}
-                  bg="#262626"
-                  px="5"
-                  py="3"
-                  variant="filled"
-                  placeholder="Enter the image link"
-                  color="white"
-                  size="lg"
-                  _hover={{ borderColor: "gray", color: "white" }}
-                  _focus={{ bg: "#262626", borderColor: "#262620" }}
-                />
-                <Image
-                  src={_host_url + profile?.cover}
-                  objectFit={"cover"}
-                  width={"100%"}
-                  height={"200px"}
-                />
-                <Box position={"absolute"}>
-                  <LuImagePlus color="white" />
-                </Box>
-              </Button>
-            </Box>
-
-            <Box>
-              <Button
-                onClick={handleImage}
-                fontSize="3xl"
-                background={"none"}
-                width={""}
-                _hover={{ backgroundColor: "none", color: "white" }}
-              >
-                <Input
-                  ref={inputRef}
-                  hidden
-                  type="file"
-                  name="avatar"
-                  onChange={handleChangeImage}
-                  bg="#262626"
-                  px="5"
-                  py="3"
-                  variant="filled"
-                  placeholder="Enter the image link"
-                  color="white"
-                  size="lg"
-                  _hover={{ borderColor: "gray", color: "white" }}
-                  _focus={{ bg: "#262626", borderColor: "#262620" }}
-                />
-                <Wrap position={"absolute"} top={"-80px"} left={"30px"}>
-                  <WrapItem>
-                    <Avatar
-                      size={"xl"}
-                      name={profile?.user.fullname}
-                      src={_host_url + profile?.avatar}
-                    />
-                    <Box position={"absolute"} right={"0px"} bottom={"0px"}>
-                      <LuImagePlus color="white" />
-                    </Box>
-                  </WrapItem>
-                </Wrap>
-              </Button>
+                height={"80px"}
+                src={imagePreviewCover ? imagePreviewCover : ""}
+                rounded={"10px"}
+                onClick={handleCover}
+                objectFit={"cover"}
+              />
+              <Input
+                type="file"
+                display={"none"}
+                onChange={handleImageCover}
+                name="cover"
+                ref={inputCoverRef}
+              />
+              <Image
+                rounded={"full"}
+                width={"70px"}
+                height={"70px"}
+                pos={"absolute"}
+                top={"45px"}
+                left={"30px"}
+                objectFit={"cover"}
+                src={imagePreviewAvatar ? imagePreviewAvatar : imageEdit}
+                border={"4px"}
+                borderColor={"#262626"}
+                onClick={handleAvatar}
+              />
+              <Input
+                type="file"
+                display={"none"}
+                onChange={handleImageAvatar}
+                name="avatar"
+                ref={inputAvatarRef}
+              />
             </Box>
 
             <InputGroup display="flex" flexDir="column" gap="4">
@@ -155,10 +175,21 @@ const ModalEditProfile = () => {
                 color="white"
                 py={6}
                 type={"text"}
+                name={"username"}
+                placeholder={profile?.user.username}
+                value={formEditProfile.username}
+                onChange={handleInput}
+              />
+              <Input
+                borderColor="gray"
+                borderRadius="xl"
+                color="white"
+                py={6}
+                type={"text"}
                 name={"fullname"}
                 placeholder={profile?.user.fullname}
                 value={formEditProfile.fullname}
-                onChange={handleChange}
+                onChange={handleInput}
               />
               <Input
                 borderColor="gray"
@@ -169,12 +200,17 @@ const ModalEditProfile = () => {
                 name={"bio"}
                 placeholder={profile?.bio}
                 value={formEditProfile.bio}
-                onChange={handleChange}
+                onChange={handleInput}
               />
             </InputGroup>
 
             <Box py="5" display={"flex"} justifyContent="end">
-              <Button colorScheme="whatsapp" borderRadius="3xl" px="5">
+              <Button
+                type="submit"
+                colorScheme="whatsapp"
+                borderRadius="3xl"
+                px="5"
+              >
                 Save
               </Button>
             </Box>
@@ -186,26 +222,3 @@ const ModalEditProfile = () => {
 };
 
 export default ModalEditProfile;
-
-// <FormControl>
-//   <Box
-//     border={"1px"}
-//     borderRadius={"lg"}
-//     borderColor={"gray"}
-//     py={"3px"}
-//     gap={"1px"}
-//   >
-//     <FormLabel color="gray" fontSize={"sm"} px={"10px"}>
-//       Name
-//     </FormLabel>
-//     <Input
-//       type="email"
-//       size={"sm"}
-//       color={"white"}
-//       border={"none"}
-//       _focus={{ border: "none", outline: "none" }}
-//       _active={{ border: "none" }}
-//       value={"User"}
-//     />
-//   </Box>
-// </FormControl>

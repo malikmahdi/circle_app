@@ -29,8 +29,6 @@ const RightSideBar = (): React.JSX.Element => {
     getAllUsers();
   }, []);
 
-  console.log("users", users);
-
   return (
     <>
       <Box height="100%" position="fixed">
@@ -50,7 +48,7 @@ const RightSideBar = (): React.JSX.Element => {
           paddingBottom="5"
         >
           {users.map((item) => (
-            <SuggestedSidebar data={item} />
+            <SuggestedSidebar data={item} key={item.id} />
           ))}
         </Box>
         <FooterSideBar />

@@ -25,10 +25,7 @@ export const getProfileAsync = createAsyncThunk(
   "auth/getProfile",
   async (token: string) => {
     try {
-      console.log("token :", token);
-
       const { data } = await getProfile(token);
-      console.log("data.data :", data.data);
 
       return data.data;
     } catch (error) {
