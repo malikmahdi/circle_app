@@ -31,6 +31,8 @@ const BaseLayout: React.FC = () => {
     checkToken();
   }, []);
 
+  console.log("ini doc", document);
+
   return (
     <>
       <Flex color="white" height="100vh" backgroundColor={"#1D1D1D"}>

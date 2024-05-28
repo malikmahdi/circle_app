@@ -25,8 +25,8 @@ export interface IUser {
   email: string;
   profile?: IProfile;
   _count: ICount;
-  follower?: any;
-  following?: any;
+  follower?: IFollow[];
+  following?: IFollow[];
 }
 
 export interface IProfile {
@@ -35,6 +35,11 @@ export interface IProfile {
   avatar?: string;
   cover?: string;
   user: IUser;
+}
+
+interface IFollow {
+  follower?: IUser;
+  following?: IUser;
 }
 
 interface ICount {

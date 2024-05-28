@@ -15,9 +15,9 @@ const threadSlice = createSlice({
   initialState,
   reducers: {},
   extraReducers(builder) {
-    builder.addCase(getThreadAsync.pending, (state) => {
-      state.threads = [];
-    });
+    // builder.addCase(getThreadAsync.pending, (state) => {
+    //   state.threads = [];
+    // });
 
     builder.addCase(getThreadAsync.fulfilled, (state, action) => {
       state.threads = action.payload;

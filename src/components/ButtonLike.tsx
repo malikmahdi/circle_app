@@ -2,18 +2,19 @@ import { Button } from "@chakra-ui/react";
 import React, { useState, useEffect } from "react";
 import { FaHeart } from "react-icons/fa";
 import { AiOutlineHeart } from "react-icons/ai";
-import { useAppSelector } from "../store/rootReducer";
+import { useAppDispatch, useAppSelector } from "../store/rootReducer";
 import APIConfig from "../libs/api";
+import { getThreadAsync } from "../store/async/thread";
 
 interface ILikeButtonProps {
   threadId: number;
   callback?: () => Promise<void>;
 }
 
-const LikeButton: React.FC<ILikeButtonProps> = ({ threadId, callback }) => {
+const LikeButton: React.FC<ILikeButtonProps> = ({ threadId }) => {
   const { token } = useAppSelector((state) => state.auth);
   const [liked, setLiked] = useState(false);
-
+  const dispatch = useAppDispatch();
   const getLike = async () => {
     try {
       const res = await APIConfig.get(`like/${threadId}`, {
@@ -41,6 +42,7 @@ const LikeButton: React.FC<ILikeButtonProps> = ({ threadId, callback }) => {
           },
         }
       );
+      dispatch(getThreadAsync());
       getLike();
     } catch (error) {
       console.log(error);

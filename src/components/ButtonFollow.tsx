@@ -2,10 +2,11 @@ import { Button, Text } from "@chakra-ui/react";
 import React, { useState, useEffect } from "react";
 import { FaHeart } from "react-icons/fa";
 import { AiOutlineHeart } from "react-icons/ai";
-import { useAppSelector } from "../store/rootReducer";
+import { useAppDispatch, useAppSelector } from "../store/rootReducer";
 import APIConfig from "../libs/api";
 import { Link } from "react-router-dom";
 import { follow } from "../libs/call/follow";
+import { getFollowingAsync } from "../store/async/follow";
 
 interface IFollowButtonProps {
   followingId: number;
@@ -18,7 +19,7 @@ const FollowButton: React.FC<IFollowButtonProps> = ({
 }) => {
   const { user } = useAppSelector((state) => state.auth);
   const [followed, setFollowed] = useState<boolean>(false);
-
+  const dispatch = useAppDispatch();
   const getFollow = async () => {
     try {
       const res = await APIConfig.get(`check-follow/${followingId}`, {
@@ -46,7 +47,7 @@ const FollowButton: React.FC<IFollowButtonProps> = ({
           },
         }
       );
-
+      dispatch(getFollowingAsync());
       if (callback) {
         await callback();
       } else {
